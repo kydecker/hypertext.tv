@@ -1,6 +1,8 @@
+packages:
+  - "hypertext.tv"
 allowBuilds:
-  '@biomejs/biome': true
+  "@biomejs/biome": true
   esbuild: true
   sharp: true
-  simple-git-hooks: set this to true or false
+  simple-git-hooks: true
   workerd: true
