@@ -40,7 +40,7 @@ schedule:
     - "14:30":
     - "15:00":
         title: BeepBox
-        author:  John Nesky
+        author: John Nesky
         url: https://www.beepbox.co/
     - "15:30":
     - "16:00":
@@ -56,9 +56,6 @@ schedule:
     - "21:00":
     - "21:30":
     - "22:00":
-        title: Youtube Sequencer
-        author: Andrew Boylan
-        url: https://youtubesequencer.com/
     - "22:30":
     - "23:00":
     - "23:30":
@@ -356,12 +353,12 @@ schedule:
     - "16:30":
     - "17:00":
     - "17:30":
-    - "18:00": 
+    - "18:00":
     - "18:30":
     - "19:00":
         title: Backmasking
         author: Jeff Milner
-        url : https://jeffmilner.com/backmasking/
+        url: https://jeffmilner.com/backmasking/
     - "19:30":
     - "20:00":
     - "20:30":
