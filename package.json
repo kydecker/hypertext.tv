@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky",
     "dev": "wrangler types && astro dev",
     "build": "wrangler types && astro build",
     "preview": "wrangler types && astro preview",
@@ -15,6 +14,14 @@
     "lint:fix": "biome lint --write .",
     "check": "astro check && biome check",
     "check:fix": "astro check && biome check --write ."
+  },
+  "simple-git-hooks": {
+    "pre-commit": "./node_modules/.bin/nano-staged"
+  },
+  "nano-staged": {
+    "*.{js,jsx,ts,tsx,astro}": [
+      "biome check --write"
+    ]
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -35,8 +42,9 @@
     "@types/three": "^0.174.0",
     "autoprefixer": "^10.4.21",
     "cssnano": "^7.0.6",
-    "husky": "^9.1.7",
+    "nano-staged": "^1.0.2",
     "sharp": "^0.34.0",
+    "simple-git-hooks": "^2.13.1",
     "wrangler": "^4.67.1"
   }
 }
