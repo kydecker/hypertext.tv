@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/cloudflare": "^13.1.10",
     "@astrojs/mdx": "^4.2.2",
     "@astrojs/sitemap": "^3.3.0",
-    "astro": "^5.18.1",
+    "astro": "^6.1.10",
     "fathom-client": "^3.7.2",
     "howler": "^2.2.4",
     "three": "^0.174.0",
