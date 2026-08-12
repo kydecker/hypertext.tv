@@ -1,7 +1,5 @@
 import { DurableObject } from "cloudflare:workers";
 import { handle } from "@astrojs/cloudflare/handler";
-import type { SSRManifest } from "astro";
-import { App } from "astro/app";
 
 export interface Env {
   VIEWER_COUNT: DurableObjectNamespace<ViewerCount>;
@@ -97,21 +95,8 @@ export class ViewerCount extends DurableObject<Env> {
   }
 }
 
-export function createExports(manifest: SSRManifest) {
-  const app = new App(manifest);
-
-  return {
-    default: {
-      async fetch(
-        request: Request,
-        env: Env,
-        ctx: ExecutionContext,
-      ): Promise<Response> {
-        // Pass all requests to Astro
-        // @ts-expect-error - Type mismatch between Workers Request and Astro Request
-        return handle(manifest, app, request, env, ctx);
-      },
-    } satisfies ExportedHandler<Env>,
-    ViewerCount: ViewerCount,
-  };
-}
+export default {
+  async fetch(request, env, ctx) {
+    return handle(request, env, ctx);
+  },
+} satisfies ExportedHandler<Env>;
