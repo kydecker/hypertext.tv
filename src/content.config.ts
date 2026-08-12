@@ -28,9 +28,7 @@ const timeSlotContent = z.union([program, z.null()]);
 const timeSlot = z.record(
   // Key must be a valid 24-hour time in HH:MM format
   // Time must be :30 or :00
-  z
-    .string()
-    .regex(/^([01]\d|2[0-3]):(30|00)$/),
+  z.string().regex(/^([01]\d|2[0-3]):(30|00)$/),
   timeSlotContent,
 );
 

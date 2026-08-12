@@ -2,8 +2,18 @@
   "name": "hypertext-tv",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=24.14.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.21.0",
+      "onFail": "download"
+    }
+  },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
+    "prepare": "simple-git-hooks",
     "dev": "wrangler types && astro dev",
     "build": "wrangler types && astro build",
     "preview": "wrangler types && astro preview",
@@ -19,7 +29,9 @@
     "pre-commit": "./node_modules/.bin/nano-staged"
   },
   "nano-staged": {
-    "*.{js,jsx,ts,tsx,astro}": ["biome check --write"]
+    "*.{js,jsx,ts,tsx,astro}": [
+      "biome check --write"
+    ]
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -33,7 +45,7 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.5.8",
     "@cloudflare/workers-types": "^4.20241218.0",
     "@types/howler": "^2.2.12",
     "@types/node": "^25.0.0",

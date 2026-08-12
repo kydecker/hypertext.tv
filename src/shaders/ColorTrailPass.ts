@@ -3,8 +3,8 @@ import {
   HalfFloatType,
   type Texture,
   type TextureDataType,
-  WebGLRenderTarget,
   type WebGLRenderer,
+  WebGLRenderTarget,
 } from "three";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import vertexShader from "./rgbtrail.vert?raw";
