@@ -5,6 +5,7 @@ dist/
 .astro/
 .netlify/
 .wrangler/
+.pnpm_store/
 
 # dependencies
 node_modules/
