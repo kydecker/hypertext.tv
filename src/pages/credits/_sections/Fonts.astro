@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import betterVcr from "../_images/better-vcr.svg";
 import dseg14 from "../_images/dseg-14.svg";
 import eurostile from "../_images/eurostile.svg";
@@ -13,48 +14,28 @@ import eurostileExtd from "../_images/eurostile-extd.svg";
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img
-        src={betterVcr.src}
-        width={betterVcr.width}
-        height={betterVcr.height}
-        alt="Better VCR"
-      />
+      <Image src={betterVcr} alt="Better VCR" />
     </a>
     <a
       href="https://github.com/ZeusOfTheCrows/DSegstended"
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img
-        src={dseg14.src}
-        width={dseg14.width}
-        height={dseg14.height}
-        alt="DSEG 14"
-      />
+      <Image src={dseg14} alt="DSEG 14" />
     </a>
     <a
       href="https://fonts.adobe.com/fonts/eurostile"
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img
-        src={eurostile.src}
-        width={eurostile.width}
-        height={eurostile.height}
-        alt="Eurostile"
-      />
+      <Image src={eurostile} alt="Eurostile" />
     </a>
     <a
       href="https://fonts.adobe.com/fonts/eurostile-extended"
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img
-        src={eurostileExtd.src}
-        width={eurostileExtd.width}
-        height={eurostileExtd.height}
-        alt="Eurostile Extd"
-      />
+      <Image src={eurostileExtd} alt="Eurostile Extd" />
     </a>
   </div>
 </section>

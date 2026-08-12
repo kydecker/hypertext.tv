@@ -1,12 +1,10 @@
 ---
+import { Image } from "astro:assets";
 import logo from "../_images/logo.svg";
-
-const height = 120;
-const width = Math.round((height / logo.height) * logo.width);
 ---
 
 <section class="logo">
-  <h1><img src={logo.src} width={width} height={height} alt="Hypertext TV" /></h1>
+  <h1><Image src={logo} alt="Hypertext TV" height={120} /></h1>
 </section>
 <section class="intro">
   <p>
