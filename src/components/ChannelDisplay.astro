@@ -65,13 +65,17 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
         letter-spacing="1.3"
       >
         <tspan class="live" data-active={hasProgram}>LIVE</tspan>
+        {" "}
         <tspan class="until" data-active={hasTiming}>UNTIL</tspan>
+        {" "}
         <tspan class="time" data-active={hasTiming} data-datetime={endTime}>
           00:00
         </tspan>
+        {" "}
         <tspan class="am-pm am" data-active="false" aria-hidden="true">
           AM
         </tspan>
+        {" "}
         <tspan class="am-pm pm" data-active="false" aria-hidden="true">
           PM
         </tspan>
@@ -88,6 +92,7 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
         transition:persist
       >
         <tspan class="leading-zeros">00</tspan><tspan class="count">1</tspan>
+        {" "}
         <tspan>WATCHING</tspan>
       </text>
     </g>

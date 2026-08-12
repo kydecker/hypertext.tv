@@ -12,7 +12,7 @@ export default defineConfig({
     enabled: false,
   },
   adapter: cloudflare({
-    imageService: "compile",
+    imageService: "passthrough",
   }),
   prefetch: true,
   redirects: {
