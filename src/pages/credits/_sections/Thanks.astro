@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import arena from "../_images/arena.svg";
 import astro from "../_images/astro.svg";
 import biome from "../_images/biome.svg";
@@ -8,34 +7,48 @@ import figma from "../_images/figma.svg";
 import frontendHorse from "../_images/frontend-horse.svg";
 import sfpc from "../_images/sfpc.svg";
 import three from "../_images/three.svg";
+
+interface SvgMetadata {
+  src: string;
+  width: number;
+  height: number;
+}
+
+function sizedTo(image: SvgMetadata, height: number) {
+  return { width: Math.round((height / image.height) * image.width), height };
+}
 ---
 
 <section>
   <h2>Built With</h2>
   <div class="thanks">
     <a href="https://astro.build/">
-      <Image src={astro} alt="Astro" height={64} />
+      <img src={astro.src} alt="Astro" {...sizedTo(astro, 64)} />
     </a>
     <a href="https://biomejs.dev/">
-      <Image src={biome} alt="Biome" height={48} />
+      <img src={biome.src} alt="Biome" {...sizedTo(biome, 48)} />
     </a>
     <a href="https://codepen.io/">
-      <Image src={codepen} alt="Codepen" height={44} />
+      <img src={codepen.src} alt="Codepen" {...sizedTo(codepen, 44)} />
     </a>
     <a href="https://www.figma.com/">
-      <Image src={figma} alt="Figma" height={48} />
+      <img src={figma.src} alt="Figma" {...sizedTo(figma, 48)} />
     </a>
     <a href="https://threejs.org/">
-      <Image src={three} alt="Three.js" height={68} />
+      <img src={three.src} alt="Three.js" {...sizedTo(three, 68)} />
     </a>
     <a href="https://are.na/">
-      <Image src={arena} alt="Are.na" height={48} />
+      <img src={arena.src} alt="Are.na" {...sizedTo(arena, 48)} />
     </a>
     <a href="https://frontend.horse/">
-      <Image src={frontendHorse} alt="Frontend Horse" height={80} />
+      <img
+        src={frontendHorse.src}
+        alt="Frontend Horse"
+        {...sizedTo(frontendHorse, 80)}
+      />
     </a>
     <a href="https://sfpc.study/">
-      <Image src={sfpc} alt="SFPC" height={68} />
+      <img src={sfpc.src} alt="SFPC" {...sizedTo(sfpc, 68)} />
     </a>
   </div>
 </section>
