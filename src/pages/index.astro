@@ -140,8 +140,8 @@ const { timeBlocks, channels } = guideData;
   }
 
   @media (hover: hover) {
-    tbody:has(tr:hover) tr,
-    tbody:has(tr:focus) tr {
+    table:has(tbody tr:hover) tbody tr:not(:hover),
+    table:has(tbody tr:focus) tbody tr:not(:focus) {
       opacity: 0.5;
     }
 
