@@ -1,11 +1,11 @@
 ---
-
 ---
 
 <div id="menu" data-open="false">
   <div class="menu-content" role="menu" aria-label="Menu Options">
     <div aria-hidden="true" class="instructions">
-      <span>↑↓Select</span><span>Adjust←→</span>
+      <span>↑↓Select</span>
+      <span>Adjust←→</span>
     </div>
     <hr />
     <button
@@ -13,15 +13,19 @@
       tabindex="0"
       type="button"
       data-on="true"
-      data-setting="scanlines">Scanlines</button
+      data-setting="scanlines"
     >
+      Scanlines
+    </button>
     <button
       role="menuitem"
       tabindex="0"
       type="button"
       data-on="true"
-      data-setting="sound">Sound</button
+      data-setting="sound"
     >
+      Sound
+    </button>
     <label role="menuitem" tabindex="-1">
       <span>Brightness</span>
       <input type="range" min="-3" max="3" value="0" name="brightness" />
@@ -43,26 +47,23 @@
       <input type="range" min="-3" max="3" value="0" name="vertical" />
     </label>
     <hr />
-    <a
-      href="/test"
-      role="menuitem"
-      tabindex="-1"
-      onclick="fathom.trackEvent('menu: click testing')">Testing</a
-    >
-    <a
-      href="/credits"
-      role="menuitem"
-      tabindex="-1"
-      onclick="fathom.trackEvent('menu: click credits')">Credits</a
-    >
+    <a href="/test" role="menuitem" tabindex="-1">
+      Testing
+    </a>
+    <a href="/credits" role="menuitem" tabindex="-1">
+      Credits
+    </a>
     <a
       href="https://github.com/kydecker/hypertext.tv"
       role="menuitem"
       tabindex="-1"
-      onclick="fathom.trackEvent('menu: click contribute')">Contribute</a
     >
+      Contribute
+    </a>
     <hr />
-    <button role="menuitem" tabindex="-1" type="button">Exit menu</button>
+    <button role="menuitem" tabindex="-1" type="button">
+      Exit menu
+    </button>
   </div>
 </div>
 
@@ -179,8 +180,6 @@
 </style>
 
 <script>
-  import * as Fathom from "fathom-client";
-
   document.addEventListener("astro:page-load", () => {
     class MenuFocusGroup {
       private el: HTMLElement;
@@ -304,9 +303,7 @@
                 localStorage.getItem(setting.localStorageKey) ||
                 setting.defaultValue;
               input.value = savedValue;
-              this.handleSettingChange(setting.name, savedValue, {
-                doNotTrack: true,
-              });
+              this.handleSettingChange(setting.name, savedValue);
             }
           } else if (setting.type === "toggle") {
             // Initialize toggle settings
@@ -322,19 +319,13 @@
               toggleElement.setAttribute("data-on", isOn ? "true" : "false");
 
               // Also trigger the setting change to ensure the event is fired
-              this.handleSettingChange(setting.name, isOn.toString(), {
-                doNotTrack: true,
-              });
+              this.handleSettingChange(setting.name, isOn.toString());
             }
           }
         });
       }
 
-      private handleSettingChange(
-        settingName: string,
-        value: string,
-        options: { doNotTrack?: boolean } = { doNotTrack: false },
-      ) {
+      private handleSettingChange(settingName: string, value: string) {
         const setting = this.settings.find((s) => s.name === settingName);
         if (!setting) return;
 
@@ -345,12 +336,6 @@
           bubbles: true,
         });
         this.el.dispatchEvent(event);
-
-        if (options.doNotTrack === false) {
-          Fathom.trackEvent(`menu: ${setting.eventName}`, {
-            _value: Number(value),
-          });
-        }
       }
 
       private handleKeyDown(e: KeyboardEvent) {
@@ -459,10 +444,7 @@
         }
       }
 
-      private toggleItem(
-        item: HTMLElement,
-        options: { doNotTrack?: boolean } = { doNotTrack: false },
-      ) {
+      private toggleItem(item: HTMLElement) {
         if (item.hasAttribute("data-on")) {
           const isOn = item.getAttribute("data-on") === "true";
           const newState = !isOn;
@@ -471,7 +453,7 @@
           // Check if this is a toggleable setting
           const settingName = item.getAttribute("data-setting");
           if (settingName) {
-            this.handleSettingChange(settingName, newState.toString(), options);
+            this.handleSettingChange(settingName, newState.toString());
           }
         }
       }
@@ -499,7 +481,6 @@
     function openMenu() {
       menu?.setAttribute("data-open", "true");
       if (menuFocusGroup) menuFocusGroup.setSelectedIndex(0);
-      Fathom.trackEvent("menu: open");
     }
 
     function closeMenu() {
@@ -512,7 +493,6 @@
       });
       const menuButton = document.getElementById("menu");
       menuButton?.focus();
-      Fathom.trackEvent("menu: close");
     }
 
     function toggleMenu() {
