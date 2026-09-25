@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const program = z.object({
   /**
@@ -18,7 +19,7 @@ const program = z.object({
    * URL of the website
    * @example "https://mycoolwebsite.com"
    */
-  url: z.string().url(),
+  url: z.url(),
 });
 
 // A time slot can contain a program or be empty

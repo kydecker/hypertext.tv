@@ -1,5 +1,4 @@
 ---
-
 ---
 
 <div class="no-schedule">
@@ -62,8 +61,6 @@
 </style>
 
 <script>
-  import * as Fathom from "fathom-client";
-
   document.addEventListener("astro:page-load", () => {
     // Get all paths to collect colors
     const paths = document.querySelectorAll(".no-schedule svg path");
@@ -116,14 +113,12 @@
             "fill",
             getRandomColor(target.getAttribute("fill") ?? ""),
           );
-          Fathom.trackEvent("no schedule: click path");
         }
 
         // Handle text span clicks
         if (target.tagName === "SPAN" && target.closest(".message")) {
           console.log("letter clicked!", target);
           target.textContent = getNextLetter(target.textContent ?? "");
-          Fathom.trackEvent("no schedule: click letter");
         }
       };
 

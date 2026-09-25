@@ -16,76 +16,71 @@ const pageTitle =
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-		/>
-		<title>{pageTitle}</title>
-		<link rel="preconnect" href="https://cdn.usefathom.com" />
-		<script>
-			import * as Fathom from "fathom-client";
-			Fathom.load("EPXKTQED");
-		</script>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="canonical" href={canonicalURL} />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<meta name="generator" content={Astro.generator} />
-		<meta
-			name="description"
-			content="Daily programming for the handmade web. Airing now."
-		/>
-		<meta property="og:image" content="/assets/og.png" />
-		<meta property="og:title" content={pageTitle} />
-		<meta
-			property="og:description"
-			content="Daily programming for the handmade web. Airing now."
-		/>
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:type" content="website" />
-		<link
-			rel="preload"
-			href="/fonts/BetterVCR-latin.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="/fonts/DSEG14ClassicMini-Italic.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="/fonts/Eurostile-Bold.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<SoundsPreloader />
-		<ClientRouter />
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>{pageTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="Daily programming for the handmade web. Airing now."
+    />
+    <meta property="og:image" content="/assets/og.png" />
+    <meta property="og:title" content={pageTitle} />
+    <meta
+      property="og:description"
+      content="Daily programming for the handmade web. Airing now."
+    />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <link
+      rel="preload"
+      href="/fonts/BetterVCR-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/DSEG14ClassicMini-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Eurostile-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <SoundsPreloader />
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: #000;
-		font-family: "eurostile", sans-serif;
-		font-weight: 700;
-		font-style: normal;
-		overflow: hidden;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    font-family: "eurostile", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    overflow: hidden;
+  }
 </style>

@@ -98,8 +98,6 @@ import Layout from "@layouts/Layout.astro";
 </style>
 
 <script>
-  import * as Fathom from "fathom-client";
-
   document.addEventListener("astro:page-load", () => {
     document.getElementById("url-form")?.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -112,8 +110,6 @@ import Layout from "@layouts/Layout.astro";
 
       // Strip protocol (http:// or https://) if present
       const urlWithoutProtocol = url.replace(/^https?:\/\//, "");
-
-      Fathom.trackEvent("test preview: submit form");
 
       // Navigate to the new URL
       window.location.href = `/test/${urlWithoutProtocol}`;

@@ -39,7 +39,6 @@
     "@astrojs/mdx": "^7.0.5",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.2.1",
-    "fathom-client": "^3.7.2",
     "howler": "^2.2.4",
     "three": "^0.174.0",
     "typescript": "^5.8.2"
