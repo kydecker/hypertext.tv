@@ -1,8 +1,8 @@
+import { env } from "cloudflare:workers";
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = async ({ request, locals }) => {
-  const ViewerCountNamespace = locals.runtime.env
-    .VIEWER_COUNT as DurableObjectNamespace;
+export const GET: APIRoute = async ({ request }) => {
+  const ViewerCountNamespace = env.VIEWER_COUNT;
 
   if (!ViewerCountNamespace) {
     return new Response("Durable Object not available", { status: 500 });
