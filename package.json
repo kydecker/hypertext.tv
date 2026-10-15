@@ -41,7 +41,7 @@
     "astro": "^7.2.1",
     "howler": "^2.2.4",
     "three": "^0.174.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
