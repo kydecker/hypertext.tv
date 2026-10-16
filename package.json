@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/cloudflare": "^14.2.1",
-    "@astrojs/mdx": "^7.0.5",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.1",
+    "@astrojs/cloudflare": "^14.3.4",
+    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.8",
     "howler": "^2.2.4",
     "three": "^0.174.0",
     "typescript": "^5.9.3"
