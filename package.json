@@ -40,7 +40,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.2.1",
     "howler": "^2.2.4",
-    "three": "^0.174.0",
+    "three": "^0.186.1",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@cloudflare/workers-types": "^4.20241218.0",
     "@types/howler": "^2.2.13",
     "@types/node": "^25.9.9",
-    "@types/three": "^0.174.0",
+    "@types/three": "^0.186.0",
     "browserslist": "^4.29.3",
     "lightningcss": "^1.33.0",
     "nano-staged": "^1.0.2",
