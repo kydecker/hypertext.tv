@@ -35,25 +35,25 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/cloudflare": "^14.2.1",
-    "@astrojs/mdx": "^7.0.5",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.1",
+    "@astrojs/cloudflare": "^14.3.4",
+    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.8",
     "howler": "^2.2.4",
     "three": "^0.174.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.8",
+    "@biomejs/biome": "2.5.15",
     "@cloudflare/workers-types": "^5.20261015.1",
-    "@types/howler": "^2.2.12",
-    "@types/node": "^25.0.0",
+    "@types/howler": "^2.2.13",
+    "@types/node": "^25.9.9",
     "@types/three": "^0.174.0",
-    "browserslist": "^4.24.4",
+    "browserslist": "^4.29.3",
     "lightningcss": "^1.33.0",
     "nano-staged": "^1.0.2",
-    "sharp": "^0.35.4",
-    "simple-git-hooks": "^2.13.1",
+    "sharp": "^0.35.5",
+    "simple-git-hooks": "^2.14.0",
     "wrangler": "^4.151.0"
   }
 }
