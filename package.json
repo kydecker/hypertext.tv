@@ -36,7 +36,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.10",
     "@astrojs/cloudflare": "^14.3.4",
-    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/mdx": "^8.0.3",
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.8",
     "howler": "^2.2.4",
