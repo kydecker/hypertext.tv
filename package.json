@@ -8,7 +8,7 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.21.0",
+      "version": "12.14.0",
       "onFail": "download"
     }
   },
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.8",
-    "@cloudflare/workers-types": "^4.20241218.0",
+    "@cloudflare/workers-types": "^5.20261015.1",
     "@types/howler": "^2.2.12",
     "@types/node": "^25.0.0",
     "@types/three": "^0.174.0",
@@ -54,6 +54,6 @@
     "nano-staged": "^1.0.2",
     "sharp": "^0.35.4",
     "simple-git-hooks": "^2.13.1",
-    "wrangler": "^4.121.0"
+    "wrangler": "^4.151.0"
   }
 }

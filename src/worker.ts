@@ -1,10 +1,6 @@
 import { DurableObject } from "cloudflare:workers";
 import { handle } from "@astrojs/cloudflare/handler";
 
-export interface Env {
-  VIEWER_COUNT: DurableObjectNamespace<ViewerCount>;
-}
-
 export class ViewerCount extends DurableObject<Env> {
   private lastBroadcastTime = 0;
   private pendingBroadcast: ReturnType<typeof setTimeout> | null = null;
