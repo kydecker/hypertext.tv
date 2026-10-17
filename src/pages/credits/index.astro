@@ -45,7 +45,7 @@ const contributors: string[] = await response.json();
     scrollbar-width: none;
     z-index: 1;
 
-    /* Overrides the shared [data-marquee] clip, which has lower specificity */
+    /* #credits outranks the shared clip */
     &[data-marquee] {
       overflow-y: clip;
     }

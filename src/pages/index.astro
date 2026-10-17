@@ -311,11 +311,7 @@ const { timeBlocks, channels } = guideData;
     padding-inline: 1rem;
     border-radius: 0.75rem;
 
-    /*
-     * A highlight around the edge, painted as background layers inside a
-     * transparent border rather than a masked and blended overlay: the fill
-     * clipped to the padding box, the highlight, then the fill again beneath
-     */
+    /* Edge highlight shows through the border around a padding-box fill */
     &:not([data-empty="true"]) {
       border: var(--bevel-width) solid transparent;
       padding-inline: calc(1rem - var(--bevel-width));
