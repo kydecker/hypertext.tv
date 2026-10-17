@@ -1,6 +1,11 @@
 /// <reference types="astro/client" />
 /// <reference types="@cloudflare/workers-types" />
 
+declare module "*.cube" {
+  const lut: { size: number; data: Uint8Array<ArrayBuffer> };
+  export default lut;
+}
+
 type DurableObjectNamespace = import("@cloudflare/workers-types").DurableObjectNamespace;
 
 type ENV = {

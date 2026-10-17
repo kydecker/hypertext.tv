@@ -79,6 +79,7 @@ const contributors: string[] = await response.json();
 
 <script>
   import { infiniteScrollLoop } from "@utils/infiniteScroll";
+  import { whenIdle } from "@utils/whenIdle";
 
   let cleanupInfiniteScroll: (() => void) | null = null;
 
@@ -87,7 +88,9 @@ const contributors: string[] = await response.json();
     const content = wrapper?.querySelector(".credits-content") as HTMLElement;
 
     if (wrapper && content) {
-      cleanupInfiniteScroll = infiniteScrollLoop(wrapper, content);
+      cleanupInfiniteScroll = whenIdle(() =>
+        infiniteScrollLoop(wrapper, content),
+      );
     }
   });
 

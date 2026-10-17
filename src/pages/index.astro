@@ -369,6 +369,7 @@ const { timeBlocks, channels } = guideData;
 <script>
   import { navigate } from "astro:transitions/client";
   import { infiniteScrollLoop } from "../utils/infiniteScroll";
+  import { whenIdle } from "../utils/whenIdle";
 
   let cleanupInfiniteScroll: (() => void) | null = null;
   let timeUpdateInterval: number | null = null;
@@ -432,10 +433,12 @@ const { timeBlocks, channels } = guideData;
     const content = container?.querySelector("tbody");
 
     if (container && table && content) {
-      cleanupInfiniteScroll = infiniteScrollLoop(container, content, {
-        scrollSpeed: 20,
-        cloneInto: table,
-      });
+      cleanupInfiniteScroll = whenIdle(() =>
+        infiniteScrollLoop(container, content, {
+          scrollSpeed: 20,
+          cloneInto: table,
+        }),
+      );
     }
   });
 

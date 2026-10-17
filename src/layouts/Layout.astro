@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import SoundsPreloader from "src/sounds/SoundsPreloader.astro";
+import eurostileUrl from "../fonts/Eurostile-Bold.woff2?url";
 import "../styles/index.css";
 
 interface Props {
@@ -41,21 +42,7 @@ const pageTitle =
     <meta property="og:type" content="website" />
     <link
       rel="preload"
-      href="/fonts/BetterVCR-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/DSEG14ClassicMini-Italic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/Eurostile-Bold.woff2"
+      href={eurostileUrl}
       as="font"
       type="font/woff2"
       crossorigin

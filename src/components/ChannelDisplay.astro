@@ -153,12 +153,21 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
 
 <script>
   import { DISPLAY_CONFIG } from "@constants/channelDisplay";
+  import { whenIdle } from "../utils/whenIdle";
 
   class ChannelDisplay extends HTMLElement {
     intervalId: number | null = null;
     timeoutId: NodeJS.Timeout | null = null;
     private socket: WebSocket | null = null;
     private isConnecting = false;
+    private reconnectAttempts = 0;
+    private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    private cancelInitialConnect: (() => void) | null = null;
+
+    private handleOnline = () => {
+      this.reconnectAttempts = 0;
+      if (!this.socket) this.connectViewerCount();
+    };
 
     private shouldScrollTitle(): boolean {
       const title = this.dataset.title;
@@ -190,7 +199,8 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
       }
 
       // Initialize viewer count WebSocket
-      this.connectViewerCount();
+      this.cancelInitialConnect = whenIdle(() => this.connectViewerCount());
+      window.addEventListener("online", this.handleOnline);
     }
 
     private parseUtcTimeString(timeStr: string): Date {
@@ -242,6 +252,7 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
     disconnectedCallback() {
       this.clearTimers();
       this.disconnectViewerCount();
+      window.removeEventListener("online", this.handleOnline);
     }
 
     clearTimers() {
@@ -262,10 +273,8 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
       }
 
       // Prevent duplicate connections - close existing socket if any
-      if (this.socket) {
-        this.socket.close();
-        this.socket = null;
-      }
+      this.socket?.close();
+      this.socket = null;
 
       if (this.isConnecting) {
         return;
@@ -276,37 +285,60 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
       const url = `${protocol}//${window.location.host}/api/viewers`;
 
       try {
-        this.socket = new WebSocket(url);
+        const socket = new WebSocket(url);
+        this.socket = socket;
 
-        this.socket.addEventListener("open", () => {
+        socket.addEventListener("open", () => {
           this.isConnecting = false;
+          this.reconnectAttempts = 0;
         });
 
-        this.socket.addEventListener("message", (event) => {
+        socket.addEventListener("message", (event) => {
           const count = parseInt(event.data) || 1;
           this.updateViewerCount(count);
         });
 
-        this.socket.addEventListener("close", () => {
+        socket.addEventListener("close", () => {
+          if (this.socket !== socket) return;
           this.socket = null;
           this.isConnecting = false;
-        });
-
-        this.socket.addEventListener("error", () => {
-          this.socket = null;
-          this.isConnecting = false;
+          this.scheduleReconnect();
         });
       } catch (error) {
         this.socket = null;
         this.isConnecting = false;
+        this.scheduleReconnect();
       }
     }
 
+    private scheduleReconnect(): void {
+      if (!this.isConnected || this.reconnectTimer !== null) return;
+
+      const delay =
+        Math.min(
+          DISPLAY_CONFIG.VIEWER_RECONNECT_MAX_MS,
+          DISPLAY_CONFIG.VIEWER_RECONNECT_BASE_MS * 2 ** this.reconnectAttempts,
+        ) *
+        (0.5 + Math.random() * 0.5);
+      this.reconnectAttempts++;
+
+      this.reconnectTimer = setTimeout(() => {
+        this.reconnectTimer = null;
+        if (!navigator.onLine) return;
+        this.connectViewerCount();
+      }, delay);
+    }
+
     private disconnectViewerCount(): void {
-      if (this.socket) {
-        this.socket.close();
-        this.socket = null;
+      this.cancelInitialConnect?.();
+      this.cancelInitialConnect = null;
+      if (this.reconnectTimer !== null) {
+        clearTimeout(this.reconnectTimer);
+        this.reconnectTimer = null;
       }
+      this.reconnectAttempts = 0;
+      this.socket?.close();
+      this.socket = null;
       this.isConnecting = false;
     }
 
