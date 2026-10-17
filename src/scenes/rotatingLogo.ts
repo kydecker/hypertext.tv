@@ -61,10 +61,8 @@ export function mountRotatingLogo(canvas: HTMLElement) {
     transparent: true,
   });
 
-  const starGeometry = new THREE.CylinderGeometry(1, 1, 16, 8);
-  starGeometry.rotateX(Math.PI / 2);
   const starField = new THREE.InstancedMesh(
-    starGeometry,
+    new THREE.CylinderGeometry(1, 1, 16, 8).rotateX(Math.PI / 2),
     starMaterial,
     starCount,
   );
@@ -73,9 +71,7 @@ export function mountRotatingLogo(canvas: HTMLElement) {
   scene.add(starField);
 
   const starMatrices = starField.instanceMatrix.array;
-  const X = 12;
-  const Y = 13;
-  const Z = 14;
+  const [X, Y, Z] = [12, 13, 14];
 
   // Random position within a wide area, avoiding center
   const randomStarXY = (offset: number) => {
@@ -316,21 +312,10 @@ export function mountRotatingLogo(canvas: HTMLElement) {
 
   return () => {
     visibilityObserver.disconnect();
-    renderer.setAnimationLoop(null);
     window.removeEventListener("resize", resize);
     dragControls.dispose();
-    scene.traverse((object) => {
-      if (object instanceof THREE.Mesh) object.geometry.dispose();
-    });
-    starMaterial.dispose();
-    material.dispose();
-    lutTexture.dispose();
-    composer.passes.forEach((pass) => {
-      pass.dispose();
-    });
-    starField.dispose();
-    composer.dispose();
     renderer.dispose();
+    renderer.forceContextLoss();
     renderer.domElement.remove();
   };
 }

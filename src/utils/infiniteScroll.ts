@@ -17,11 +17,10 @@ export function infiniteScrollLoop(
   content: HTMLElement,
   options: InfiniteScrollOptions = {},
 ) {
-  const { cloneInto } = options;
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-  const scrollSpeed = prefersReducedMotion ? null : (options.scrollSpeed ?? 40);
+  const { scrollSpeed: speed = 40, cloneInto } = options;
+  const scrollSpeed = matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? null
+    : speed;
 
   const target = cloneInto || container;
 

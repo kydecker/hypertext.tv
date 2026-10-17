@@ -161,13 +161,8 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
     private socket: WebSocket | null = null;
     private isConnecting = false;
     private reconnectAttempts = 0;
-    private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
-    private cancelInitialConnect: (() => void) | null = null;
-
-    private handleOnline = () => {
-      this.reconnectAttempts = 0;
-      if (!this.socket) this.connectViewerCount();
-    };
+    private reconnectTimer?: ReturnType<typeof setTimeout>;
+    private cancelInitialConnect?: () => void;
 
     private shouldScrollTitle(): boolean {
       const title = this.dataset.title;
@@ -200,7 +195,6 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
 
       // Initialize viewer count WebSocket
       this.cancelInitialConnect = whenIdle(() => this.connectViewerCount());
-      window.addEventListener("online", this.handleOnline);
     }
 
     private parseUtcTimeString(timeStr: string): Date {
@@ -252,7 +246,6 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
     disconnectedCallback() {
       this.clearTimers();
       this.disconnectViewerCount();
-      window.removeEventListener("online", this.handleOnline);
     }
 
     clearTimers() {
@@ -312,30 +305,19 @@ const hasTiming = Boolean(startTime && endTime) && program !== null;
     }
 
     private scheduleReconnect(): void {
-      if (!this.isConnected || this.reconnectTimer !== null) return;
-
-      const delay =
-        Math.min(
-          DISPLAY_CONFIG.VIEWER_RECONNECT_MAX_MS,
-          DISPLAY_CONFIG.VIEWER_RECONNECT_BASE_MS * 2 ** this.reconnectAttempts,
-        ) *
-        (0.5 + Math.random() * 0.5);
-      this.reconnectAttempts++;
-
-      this.reconnectTimer = setTimeout(() => {
-        this.reconnectTimer = null;
-        if (!navigator.onLine) return;
-        this.connectViewerCount();
-      }, delay);
+      const delay = Math.min(
+        DISPLAY_CONFIG.VIEWER_RECONNECT_MAX_MS,
+        DISPLAY_CONFIG.VIEWER_RECONNECT_BASE_MS * 2 ** this.reconnectAttempts++,
+      );
+      this.reconnectTimer = setTimeout(
+        () => this.connectViewerCount(),
+        delay * (0.5 + Math.random() / 2),
+      );
     }
 
     private disconnectViewerCount(): void {
       this.cancelInitialConnect?.();
-      this.cancelInitialConnect = null;
-      if (this.reconnectTimer !== null) {
-        clearTimeout(this.reconnectTimer);
-        this.reconnectTimer = null;
-      }
+      clearTimeout(this.reconnectTimer);
       this.reconnectAttempts = 0;
       this.socket?.close();
       this.socket = null;

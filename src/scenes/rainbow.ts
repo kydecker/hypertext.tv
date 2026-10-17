@@ -62,8 +62,10 @@ export function mountRainbow(canvas: HTMLElement) {
     side: THREE.DoubleSide,
   });
 
-  const backgroundGeometry = new THREE.PlaneGeometry(1600, 600, 128, 128);
-  const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+  const backgroundMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(1600, 600, 128, 128),
+    backgroundMaterial,
+  );
 
   // Update rotation for more dramatic angle
   backgroundMesh.rotation.set(-Math.PI * 0.05, 0, 0); // More tilted back and rotated
@@ -109,12 +111,10 @@ export function mountRainbow(canvas: HTMLElement) {
 
   return () => {
     visibilityObserver.disconnect();
-    renderer.setAnimationLoop(null);
     window.removeEventListener("resize", resize);
     window.removeEventListener("mousemove", handleMouseMove);
-    backgroundGeometry.dispose();
-    backgroundMaterial.dispose();
     renderer.dispose();
+    renderer.forceContextLoss();
     renderer.domElement.remove();
   };
 }
