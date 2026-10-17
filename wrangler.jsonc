@@ -30,5 +30,15 @@
       "deleted_classes": ["VisitorTracker"],
       "new_sqlite_classes": ["ViewerCount"]
     }
-  ]
+  ],
+  "previews": {
+    "durable_objects": {
+      "bindings": [
+        {
+          "name": "VIEWER_COUNT",
+          "class_name": "ViewerCount"
+        }
+      ]
+    }
+  }
 }
