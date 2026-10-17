@@ -50,3 +50,37 @@ body {
     0 0 4px color-mix(in srgb, currentColor 40%, transparent),
     0 0 8px color-mix(in srgb, currentColor 30%, transparent);
 }
+
+/* Vertical looping scroll, see utils/marquee.ts */
+:where([data-marquee]) {
+  /* Pixels per second, slowed down on touch devices */
+  --marquee-speed: 40;
+  --marquee-slowdown: 1;
+
+  @media (pointer: coarse) {
+    --marquee-slowdown: 0.6;
+  }
+}
+
+[data-marquee] {
+  /* Items overflow by design while they loop */
+  overflow-y: clip;
+  /* Vertical drags seek the loop instead of panning (see marquee.ts) */
+  touch-action: pan-x pinch-zoom;
+
+  [data-marquee-item] {
+    animation: marquee
+      calc(
+        var(--marquee-distance) /
+        (var(--marquee-speed) * var(--marquee-slowdown)) *
+        1s
+      )
+      linear infinite;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateY(-100%);
+  }
+}

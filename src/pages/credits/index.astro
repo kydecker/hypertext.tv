@@ -45,6 +45,11 @@ const contributors: string[] = await response.json();
     scrollbar-width: none;
     z-index: 1;
 
+    /* Overrides the shared [data-marquee] clip, which has lower specificity */
+    &[data-marquee] {
+      overflow-y: clip;
+    }
+
     a {
       color: #fff;
     }
@@ -78,26 +83,23 @@ const contributors: string[] = await response.json();
 </style>
 
 <script>
-  import { infiniteScrollLoop } from "@utils/infiniteScroll";
-  import { whenIdle } from "@utils/whenIdle";
+  import { marquee } from "@utils/marquee";
 
-  let cleanupInfiniteScroll: (() => void) | null = null;
+  let cleanupMarquee: (() => void) | null = null;
 
   document.addEventListener("astro:page-load", () => {
     const wrapper = document.getElementById("credits");
     const content = wrapper?.querySelector(".credits-content") as HTMLElement;
 
     if (wrapper && content) {
-      cleanupInfiniteScroll = whenIdle(() =>
-        infiniteScrollLoop(wrapper, content),
-      );
+      cleanupMarquee = marquee(wrapper, content);
     }
   });
 
   document.addEventListener("astro:before-swap", () => {
-    if (cleanupInfiniteScroll) {
-      cleanupInfiniteScroll();
-      cleanupInfiniteScroll = null;
+    if (cleanupMarquee) {
+      cleanupMarquee();
+      cleanupMarquee = null;
     }
   });
 </script>

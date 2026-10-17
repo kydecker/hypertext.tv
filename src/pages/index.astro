@@ -128,14 +128,15 @@ const { timeBlocks, channels } = guideData;
   #contents {
     height: 100%;
     min-height: 0;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: auto;
     scrollbar-width: none;
     overscroll-behavior: none;
   }
 
   .container {
+    --marquee-speed: 20;
     width: clamp(640px, 100%, 1024px);
+    height: 100%;
     margin: 0 auto;
   }
 
@@ -211,7 +212,7 @@ const { timeBlocks, channels } = guideData;
   }
 
   .channel-info {
-    background: linear-gradient(to top, rgb(153, 51, 25), rgb(77, 33, 9));
+    --fill: linear-gradient(to top, rgb(153, 51, 25), rgb(77, 33, 9));
     color: rgb(226, 208, 48);
     text-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
     height: 100%;
@@ -222,7 +223,6 @@ const { timeBlocks, channels } = guideData;
     line-height: 1.2;
     text-decoration: none;
     font-weight: bold;
-    position: relative;
   }
 
   thead th:first-child,
@@ -281,7 +281,7 @@ const { timeBlocks, channels } = guideData;
   }
 
   .program-info {
-    background: linear-gradient(to top, rgb(96, 8, 229), rgb(41, 36, 53));
+    --fill: linear-gradient(to top, rgb(96, 8, 229), rgb(41, 36, 53));
     color: #eeeeee;
     text-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
     font-weight: bold;
@@ -306,28 +306,29 @@ const { timeBlocks, channels } = guideData;
 
   .channel-info,
   .program-info {
+    --bevel-width: 5px;
     min-height: 0;
     padding-inline: 1rem;
     border-radius: 0.75rem;
 
-    &:not([data-empty="true"])::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border: 5px solid transparent;
-      background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0),
-          rgba(255, 255, 255, 0),
-          rgba(255, 255, 255, 0.2)
-        )
-        border-box;
-      border-radius: 0.75rem;
-      mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      mix-blend-mode: screen;
+    /*
+     * A highlight around the edge, painted as background layers inside a
+     * transparent border rather than a masked and blended overlay: the fill
+     * clipped to the padding box, the highlight, then the fill again beneath
+     */
+    &:not([data-empty="true"]) {
+      border: var(--bevel-width) solid transparent;
+      padding-inline: calc(1rem - var(--bevel-width));
+      background:
+        var(--fill) border-box padding-box,
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.2)
+          )
+          border-box,
+        var(--fill) border-box;
     }
   }
 
@@ -351,7 +352,7 @@ const { timeBlocks, channels } = guideData;
 
       &::before {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255, 255, 255, 0.5)'%3E%3Cpath d='M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z'%3E%3C/path%3E%3C/svg%3E");
-        left: 0;
+        left: calc(-1 * var(--bevel-width));
       }
     }
 
@@ -360,7 +361,7 @@ const { timeBlocks, channels } = guideData;
 
       &::after {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255, 255, 255, 0.5)'%3E%3Cpath d='M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z'%3E%3C/path%3E%3C/svg%3E");
-        right: 0;
+        right: calc(-1 * var(--bevel-width));
       }
     }
   }
@@ -368,10 +369,9 @@ const { timeBlocks, channels } = guideData;
 
 <script>
   import { navigate } from "astro:transitions/client";
-  import { infiniteScrollLoop } from "../utils/infiniteScroll";
-  import { whenIdle } from "../utils/whenIdle";
+  import { marquee } from "../utils/marquee";
 
-  let cleanupInfiniteScroll: (() => void) | null = null;
+  let cleanupMarquee: (() => void) | null = null;
   let timeUpdateInterval: number | null = null;
 
   document.addEventListener("astro:page-load", () => {
@@ -428,25 +428,18 @@ const { timeBlocks, channels } = guideData;
       });
     });
 
-    const container = document.getElementById("contents");
-    const table = container?.querySelector("table");
+    const container = document.querySelector<HTMLElement>("#contents .container");
     const content = container?.querySelector("tbody");
 
-    if (container && table && content) {
-      cleanupInfiniteScroll = whenIdle(() =>
-        infiniteScrollLoop(container, content, {
-          scrollSpeed: 20,
-          cloneInto: table,
-        }),
-      );
+    if (container && content) {
+      cleanupMarquee = marquee(container, content);
     }
   });
 
   document.addEventListener("astro:before-swap", () => {
-    // Clean up infinite scroll listeners and animation
-    if (cleanupInfiniteScroll) {
-      cleanupInfiniteScroll();
-      cleanupInfiniteScroll = null;
+    if (cleanupMarquee) {
+      cleanupMarquee();
+      cleanupMarquee = null;
     }
 
     // Clear time update interval
