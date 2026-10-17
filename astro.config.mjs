@@ -16,6 +16,7 @@ export default defineConfig({
     imageService: "passthrough",
   }),
   prefetch: true,
+  session: false,
   redirects: {
     "/ch/00": "/",
     "/about": "/credits",
